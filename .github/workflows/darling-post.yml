@@ -1,9 +1,9 @@
 name: Darling Post Every Morning
 
 on:
-  schedule:
-    - cron: '36 22 * * *'  # 毎朝7:36 JST（UTC 22:36）
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # 毎朝9時（日本時間）
 
 jobs:
   post:
@@ -11,5 +11,9 @@ jobs:
     steps:
       - name: Call Supabase Edge Function
         run: |
-          curl -X POST https://gkerjcpfvnliwgekzqtz.supabase.co/functions/v1/dynamic-function
+          curl -X POST "${{ secrets.SUPABASE_FUNCTION_URL }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{}'
+
 
