@@ -1,0 +1,15 @@
+name: Darling Post Every Morning
+
+on:
+  schedule:
+    - cron: '36 22 * * *'  # 毎朝7:36 JST（UTC 22:36）
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Supabase Edge Function
+        run: |
+          curl -X POST https://gkerjcpfvnliwgekzqtz.supabase.co/functions/v1/dynamic-function
+
